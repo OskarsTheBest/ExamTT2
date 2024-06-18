@@ -1,0 +1,15 @@
+
+.signin {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+}
+.signin-box{
+    background-color: white;
+    color: black;
+    border: 2px;
+    padding: 20px;
+    margin: 10px;
+    height: 30vh;
+    
+}
