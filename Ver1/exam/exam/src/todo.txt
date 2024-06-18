@@ -1,0 +1,6 @@
+
+
+Fix Video downsizing
+Create File converting
+Creater an history page
+Create cookies so users that are not logged in cant use more than 5 users
