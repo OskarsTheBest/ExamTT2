@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  isAdmin: { type: Boolean, default: false }, 
   history: [{
     toolName: { type: String, required: true },
     fileName: { type: String, required: true },
@@ -27,9 +28,15 @@ const validate = (data) => {
   const schema = Joi.object({
     name: Joi.string().required().label("Name"),
     email: Joi.string().email().required().label("Email"),
-    password: passwordComplexity().required().label("Password")
+    password: passwordComplexity().required().label("Password"),
+    isAdmin: Joi.boolean().label("Admin"),
+    secretPassword: Joi.string().when('isAdmin', {
+      is: true,
+      then: Joi.string().valid('123').required().label("Secret Password")
+    })
   });
   return schema.validate(data);
 };
+
 
 module.exports = { User, validate };

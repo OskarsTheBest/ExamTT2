@@ -3,6 +3,8 @@
  */
 // ? https://www.npmjs.com/package/react-router-dom
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+
+import React, { useState, useEffect } from 'react';
 /**
  * * Route/Component imports
  */
@@ -18,8 +20,21 @@ import VideoDownsizing from './views/VideoDownsizing';
 import FileConverter from './views/FileConverter';
 import History from './views/History';
 import { AuthProvider } from './components/AuthContext';
+import AdminPage from './views/AdminPage';
 
 function App() {
+  //admin logic
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));
+      setLoggedIn(true);
+      setIsAdmin(decodedToken.isAdmin);
+    }
+  }, []);
   return (
     <AuthProvider>
     <Router>
@@ -35,6 +50,7 @@ function App() {
           <Route path="/video-downsizing" element={<VideoDownsizing/>}/>
           <Route path="/file-converter" element={<FileConverter/>}/>
           <Route path="/history" element={<History/>}/>
+          {loggedIn && isAdmin && <Route path="/admin" element={<AdminPage />} />}
         </Routes>
       </div>
       <Footer/>

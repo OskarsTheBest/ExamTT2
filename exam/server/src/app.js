@@ -72,6 +72,23 @@ app.delete('/api/deleteHistory', (req, res) => {
     .catch(err => res.status(500).json({ message: 'Error deleting history entry', error: err }));
 });
 
+app.delete('/api/deleteUser', async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const deletedUser = await User.findOneAndDelete({ email });
+
+    if (!deletedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+
+    res.json({ message: 'User deleted successfully' });
+  } catch (err) {
+    console.error('Error deleting user:', err);
+    res.status(500).json({ message: 'Error deleting user', error: err });
+  }
+});
 
 app.post('/api/convert-image', upload.single('image'), async (req, res) => {
   const { format, width, height, name } = req.body;

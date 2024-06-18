@@ -14,12 +14,19 @@ router.post("/", async (req, res) => {
     const salt = await bcrypt.genSalt(Number(SALT));
     const hashPassword = await bcrypt.hash(req.body.password, salt);
 
-    await new User({ ...req.body, password: hashPassword }).save();
+    const newUser = new User({
+      ...req.body,
+      password: hashPassword,
+      isAdmin: req.body.isAdmin || false
+    });
+
+    await newUser.save();
     res.status(201).send({ message: "User created successfully" });
   } catch (error) {
     res.status(500).send({ message: "Internal Server Error" });
   }
 });
+
 router.get('/history', async (req, res) => {
   const token = req.headers.authorization;
   if (!token) {
@@ -37,5 +44,38 @@ router.get('/history', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+router.get("/admin", async (req, res) => {
+  const token = req.headers.authorization;
+  if (!token) return res.status(401).send("No token provided.");
+
+  try {
+    const decodedToken = jwt.verify(token, JWT_PRIVATE_KEY);
+    if (!decodedToken.isAdmin) return res.status(403).send("Access denied.");
+
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.delete("/admin/:email", async (req, res) => {
+  const token = req.headers.authorization;
+  if (!token) return res.status(401).send("No token provided.");
+
+  try {
+    const decodedToken = jwt.verify(token, JWT_PRIVATE_KEY);
+    if (!decodedToken.isAdmin) return res.status(403).send("Access denied.");
+
+    const user = await User.findOneAndDelete({ email: req.params.email });
+    if (!user) return res.status(404).send("User not found.");
+
+    res.status(200).send("User deleted successfully");
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 
 module.exports = router;
