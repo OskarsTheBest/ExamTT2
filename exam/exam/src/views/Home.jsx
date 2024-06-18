@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import '../css/Home.css';
-import Typed from 'react-typed';
+import { ReactTyped } from 'react-typed';
 
 function HomePage() {
   useEffect(() => {
@@ -20,7 +20,7 @@ function HomePage() {
         <h1 className='Hero-header'>Improve with Tools</h1>
         <div className='Typed'>
           <p>Fast, Easy</p>
-          <Typed
+          <ReactTyped
             className='Typed-Letter'
             strings={['Image Converting', 'Video downsizing', 'File Converting']}
             typeSpeed={120}
