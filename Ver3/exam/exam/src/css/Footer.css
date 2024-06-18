@@ -1,0 +1,104 @@
+/* Footer styling */
+.footer {
+  padding: 20px;
+  text-align: left;
+  color: white; /* Default text color */
+}
+
+/* Footer content layout */
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Individual footer section */
+.footer-section {
+  margin: 10px;
+  flex: 1;
+}
+
+/* Header style in footer sections */
+.footer-section h4 {
+  color: white;
+}
+
+/* Centered footer copy */
+.footer-copy {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Styling for list item links */
+.footer-section a,
+.footer-ulist li a {
+  color: white;
+  text-decoration: none;
+}
+
+/* Hover effect for list item links */
+.footer-section a:hover,
+.footer-ulist li a:hover {
+  color: #00df9a;
+}
+
+/* List presentation styles */
+.footer-olist,
+.footer-ulist {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Margin for list items */
+.footer-olist li,
+.footer-ulist li {
+  margin: 5px 0;
+}
+
+/* Ordered list numbering */
+.footer-olist li::before {
+  content: counter(section-counter) ". ";
+  counter-increment: section-counter;
+}
+
+/* Resetting counter for ordered list */
+.footer-olist {
+  counter-reset: section-counter;
+}
+
+/* Social media links layout */
+.social-media-list {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Margin for social media icons */
+.social-media-list li {
+  margin: 0 5px;
+}
+
+/* Styling for social media links */
+.social-media-list li a {
+  color: #001220;
+  text-decoration: none;
+}
+
+/* Hover effect for social media links */
+.social-media-list li a:hover {
+  color: #00df9a;
+}
+
+/* Specific colors for certain social media links */
+a[href*="facebook.com"],
+a[href*="instagram.com"],
+a[href*="twitter.com"] {
+  color: #00df9a !important;
+}
+
+/* Text color for items in Legal section */
+.footer-ulist {
+  color: white;
+}
