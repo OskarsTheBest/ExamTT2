@@ -34,7 +34,7 @@ router.get('/history', async (req, res) => {
   }
 
   try {
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const decodedToken = jwt.verify(token, JWT_PRIVATE_KEY);
     const user = await User.findOne({ email: decodedToken.email });
     if (!user) {
       return res.status(404).send('User not found.');
@@ -76,6 +76,5 @@ router.delete("/admin/:email", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
 
 module.exports = router;

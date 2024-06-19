@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.methods.generateAuthToken = function () {
-  const token = jwt.sign({ _id: this._id }, JWTPRIVATEKEY, { expiresIn: "7d" });
+  const token = jwt.sign({ _id: this._id, isAdmin: this.isAdmin }, JWTPRIVATEKEY, { expiresIn: "7d" });
   return token;
 };
 
@@ -30,13 +30,9 @@ const validate = (data) => {
     email: Joi.string().email().required().label("Email"),
     password: passwordComplexity().required().label("Password"),
     isAdmin: Joi.boolean().label("Admin"),
-    secretPassword: Joi.string().when('isAdmin', {
-      is: true,
-      then: Joi.string().valid('123').required().label("Secret Password")
-    })
+    secretPassword: Joi.string().allow('').optional().label("Secret Password") // Allow empty string and optional
   });
   return schema.validate(data);
 };
-
 
 module.exports = { User, validate };
