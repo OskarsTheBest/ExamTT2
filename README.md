@@ -16,6 +16,8 @@ Ensure you have the following installed on your system:
 - Node.js
 - npm (Node Package Manager)
 - MongoDB
+- Ffmpeg
+- Libreoffice(and added soffice in terminal)
 
 ### Installation
 
